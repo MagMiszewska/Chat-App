@@ -6,6 +6,7 @@ class UserForm extends Component {
     constructor(props) {
         super(props);
         this.state = { name: '' };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit(e) {
@@ -23,7 +24,7 @@ class UserForm extends Component {
                 <input
                     className={styles.UserInput}
                     placeholder='Write your nickname and press enter'
-                    onChange={e => this.handleChange(e)}
+                    onChange={this.handleChange}
                     value={this.state.name}
                 />
             </form>

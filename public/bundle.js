@@ -30972,6 +30972,7 @@ var UserForm = (function (_Component) {
         var _this = _possibleConstructorReturn(this, (UserForm.__proto__ || Object.getPrototypeOf(UserForm)).call(this, props));
 
         _this.state = { name: '' };
+        _this.handleChange = _this.handleChange.bind(_this);
         return _this;
     }
 
@@ -30999,9 +31000,7 @@ var UserForm = (function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
                     className: __WEBPACK_IMPORTED_MODULE_1__UserForm_css___default.a.UserInput,
                     placeholder: 'Write your nickname and press enter',
-                    onChange: function onChange(e) {
-                        return _this2.handleChange(e);
-                    },
+                    onChange: this.handleChange,
                     value: this.state.name
                 })
             );
