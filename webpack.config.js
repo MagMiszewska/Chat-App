@@ -11,7 +11,6 @@ var plugins = [
 		inject: 'body',
 	})
 ];
-console.log(env)
 
 if (env === 'production') {
 	plugins.push(
