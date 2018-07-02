@@ -1,56 +1,60 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeJsPlugin = require('optimize-js-plugin');
-const plugins = [new HtmlWebpackPlugin({
-    template: 'src/index.html',
-    filename: 'index.html',
-    inject: 'body'
-})];
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var OptimizeJsPlugin = require('optimize-js-plugin');
+var env = process.env.NODE_ENV || 'development';
+var plugins = [
+	new HtmlWebpackPlugin({
+		template: 'client/index.html',
+		filename: 'index.html',
+		inject: 'body',
+	})
+];
+console.log(env)
 
-module.exports = (env) => {
-    if (env === 'production') {
-        plugins.push(
-            new OptimizeJsPlugin({
-                sourceMap: false
-            })
-        )
-    }
-    return {
-        entry: (env !== 'production' ? [
-            'react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:8080',
-            'webpack/hot/only-dev-server',
-        ] : []).concat(['./client/index.js']),
-        output: {
-            filename: './bundle.js',
-            path: path.resolve(__dirname, 'public'),
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    loader: "babel-loader",
-                    options: {
-                        plugins: env !== 'production' ? ["react-hot-loader/babel"] : []
-                    }
-                },
-                {
-                    test: /\.css$/,
-                    use: [
-                        { loader: 'style-loader' },
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                modules: true
-                            }
-                        }
+if (env === 'production') {
+	plugins.push(
+		new OptimizeJsPlugin({
+			sourceMap: false
+		})
+	);
+}
 
-                    ]
-                }
-            ]
-        },
-        plugins: plugins
-    }
+module.exports = {
+	entry: (env !== 'production' ? [
+		'react-hot-loader/patch',
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/only-dev-server',
+	] : []).concat(['./client/index.js']),
+	output: {
+		filename: './bundle.js',
+		path: path.resolve(__dirname, 'public'),
+	},
+
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: [/node_modules/],
+				loader: 'babel-loader',
+				options: {
+					plugins: env !== 'production' ? ["react-hot-loader/babel"] : []
+				}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					{ loader: 'style-loader' },
+					{
+						loader: 'css-loader',
+						options: {
+							modules: true
+						}
+					}
+				]
+			}
+		]
+	},
+	plugins: plugins
 };
