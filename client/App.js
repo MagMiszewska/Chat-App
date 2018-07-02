@@ -76,6 +76,6 @@ class App extends Component {
     renderUserForm() {
         return (<UserForm onUserSubmit={name => this.handleUserSubmit(name)} />)
     }
-};
+}
 
 export default App;
